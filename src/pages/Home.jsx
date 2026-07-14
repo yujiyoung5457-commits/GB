@@ -29,9 +29,20 @@ const Home = () => {
   return (
     <section className={styles.home}>
         <div className={styles.slide}>
-            <video key={activeVideo.src} autoPlay muted loop playsInline>
-                <source src={activeVideo.src} type="video/mp4"/>
-            </video>
+            {/* 수정: 영상을 겹쳐 배치하고 활성 영상의 투명도를 바꿔 부드럽게 전환합니다. */}
+            {videos.map((video, index) => (
+                <video
+                    key={video.src}
+                    className={`${styles.videoLayer} ${index === activeIndex ? styles.activeVideo : ''}`}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-hidden={index !== activeIndex}
+                >
+                    <source src={video.src} type="video/mp4"/>
+                </video>
+            ))}
         </div>
         {/* 글자가 나타나는 부분 */}
         <div className={styles.copy}>

@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 
 .form {
-  // 수정: 방명록 페이지는 화면 높이에서 늘어나지 않도록 고정합니다.
+  // 수정: 브라우저 종류와 관계없이 게스트북을 화면 너비와 높이에 고정합니다.
+  width: 100%;
   height: 100vh;
+  min-height: 0;
   padding: 150px 8vw 60px;
   background-image: url(/img/back4.jpg);
   box-sizing: border-box;
@@ -12,6 +14,7 @@
 
 .cute {
   width: min(1320px, 100%);
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -180,7 +183,7 @@
   color: #17345d;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 760px) {
   .form {
     padding: 120px 24px 40px;
   }
@@ -192,6 +195,94 @@
 
   .hello {
     font-size: 46px;
+  }
+}
+
+// 수정: 브라우저의 실제 화면 높이가 짧을 때도 모든 게스트북 UI가 100vh 안에 들어오게 합니다.
+@media (max-height: 820px) and (min-width: 761px) {
+  .form {
+    padding-top: 90px;
+    padding-bottom: 24px;
+  }
+
+  .hello {
+    margin-bottom: 16px;
+    font-size: 46px;
+  }
+
+  .wrap {
+    gap: 24px;
+  }
+
+  .inputColumn,
+  .choiceColumn {
+    gap: 14px;
+  }
+
+  .field textarea {
+    min-height: 170px;
+  }
+
+  .messageCharacter {
+    width: 78px;
+    height: 94px;
+  }
+
+  .emojiList {
+    gap: 7px;
+  }
+
+  .emo {
+    width: 46px;
+    height: 46px;
+    font-size: 21px;
+  }
+
+  .characterList {
+    grid-template-columns: repeat(4, 92px);
+    gap: 10px;
+  }
+
+  .characterButton {
+    width: 92px;
+    height: 96px;
+  }
+
+  .postList {
+    max-height: 430px;
+  }
+}
+
+// 수정: 일반 노트북 폭에서는 세로 1열로 바뀌지 않고 3열을 화면 안에 유지합니다.
+@media (max-width: 1100px) and (min-width: 761px) {
+  .form {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .wrap {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 16px;
+  }
+
+  .characterList {
+    grid-template-columns: repeat(4, 70px);
+    gap: 8px;
+  }
+
+  .characterButton {
+    width: 70px;
+    height: 82px;
+  }
+
+  .emojiList {
+    gap: 6px;
+  }
+
+  .emo {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
   }
 }
 
