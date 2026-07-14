@@ -1,0 +1,73 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 수정: 로그인 여부와 문서 소유자를 반복해서 확인하기 위한 함수입니다.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner() {
+      return isSignedIn() && request.auth.uid == resource.data.authorId;
+    }
+
+    function hasValidGuestBookFields() {
+      return request.resource.data.keys().hasAll([
+          'authorId',
+          'authorEmail',
+          'nickName',
+          'message',
+          'character',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'authorId',
+          'authorEmail',
+          'nickName',
+          'message',
+          'character',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.authorEmail == request.auth.token.email
+        && request.resource.data.nickName is string
+        && request.resource.data.nickName.size() > 0
+        && request.resource.data.nickName.size() <= 15
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 500
+        && request.resource.data.character in [
+          'rabbit', 'cat', 'dog', 'penguin', 'duck', 'dino', 'alpaca', 'fox'
+        ];
+    }
+
+    match /guestbooks/{guestBookId} {
+      // 수정: 비회원도 방명록을 읽을 수 있습니다.
+      allow get, list: if true;
+
+      // 수정: 로그인 사용자만 자신의 UID로 새 방명록을 작성할 수 있습니다.
+      allow create: if isSignedIn()
+        && hasValidGuestBookFields()
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      // 수정: 작성자 본인만 메시지·캐릭터·수정 시간만 변경할 수 있습니다.
+      allow update: if isOwner()
+        && hasValidGuestBookFields()
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['message', 'character', 'updatedAt'])
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      // 수정: 작성자 본인만 자신의 문서를 삭제할 수 있습니다.
+      allow delete: if isOwner();
+    }
+
+    // 수정: 명시하지 않은 모든 문서 접근은 기본적으로 거부합니다.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

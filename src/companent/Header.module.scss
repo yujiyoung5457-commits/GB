@@ -1,0 +1,80 @@
+.header,
+.header *{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+  }
+
+.header > span {
+  width: 0;
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: width 0.8s ease;
+  pointer-events: none;
+}
+.header{
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 70px;
+    transition: all 0.3s;
+    // background-color: rgba($color:#FFFF , $alpha: 0);
+    // border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+     backdrop-filter: blur(5px);
+     &:hover{
+        // background-color: rgba($color:#FFFF , $alpha: 0.1);
+     }
+     font-family: "Oswald", sans-serif;font-family: "Oswald", sans-serif;
+
+      &:hover {
+    // background-color: rgba($color: #fff, $alpha: 0.2);
+
+    > span {
+      width: 100%;
+    }
+  }
+}
+.logo{
+    font-weight: bold;
+    font-size: 23px;
+}
+.nav{
+    display: flex;
+    gap: 30px;
+    transition: all 0.3;
+    font-size: 18px;
+}
+
+.inner{
+    width: 100%;
+     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    margin: 0 400px;
+   
+}
+.inner a {
+  color: white;
+  text-decoration: none;
+}
+.login, .signup{
+    font-size: 18px;
+}
+.inner>div{
+    display: flex;
+    gap: 30px;
+  }
+
+  

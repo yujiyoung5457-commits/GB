@@ -1,0 +1,27 @@
+게스트북 만들기
+ 프론트 -서버 연결
+  폴더구조
+  src
+  |-main.jsx(BrowserRouter생성)
+  |-App.jsx(Routes, Route)
+
+  |-components
+   |-Header(Link. nav)
+   |-Header.scss
+   |-CharacterAvatar.jsx
+   |-CharacterAvatar.scss
+   |
+   |-characterData.js
+   |-GuestBook.jsx(캐릭터관리)
+   |-GuestBook.module.scss
+   |-GuestBook.js(캐릭터 데이터)
+   |-GuestBookForm.jsx(글입력, 캐릭터와 이모티콘 선택)
+   |-GuestBookForm.module.jsx
+|-pages
+  |-Home.jsx (동영상이 필요)
+  |-Home.module.scss
+  |-GuestBook.jsx(게스트북 홈을 데리고 옴)
+  |-GuestBook.module.scss
+  |-Login.jsx
+  |-SignUp.jsx
+  |-Auth.module.scss(로긴,회원가입을 동시에 관리하는 사스)

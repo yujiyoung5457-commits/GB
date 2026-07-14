@@ -1,0 +1,118 @@
+import React, { useState } from 'react'
+import CharacterAvatar from './CharacterAvatar'
+import useAuthStore from '../store/useAuthStore'
+import { deleteGuestBook, updateGuestBook } from '../services/guestBookService'
+import styles from './GuestBook.module.scss'
+
+const GuestBookList = ({ posts, loadError }) => {
+  const user = useAuthStore((state) => state.user)
+  const [searchText, setSearchText] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
+  const [editingId, setEditingId] = useState(null)
+  const [editingMessage, setEditingMessage] = useState('')
+  const [actionMessage, setActionMessage] = useState('')
+
+  // 수정: 실제 Firebase 작성자 이메일을 소문자로 비교해 해당 이메일의 글만 찾습니다.
+  const filteredPosts = posts.filter((post) => (
+    !searchEmail || post.authorEmail?.toLowerCase().includes(searchEmail)
+  ))
+
+  const handleSearch = (event) => {
+    event.preventDefault()
+    setSearchEmail(searchText.trim().toLowerCase())
+  }
+
+  // 수정: 브라우저 prompt 대신 카드 안에서 메시지를 수정합니다.
+  const startEditing = (post) => {
+    setEditingId(post.id)
+    setEditingMessage(post.message)
+    setActionMessage('')
+  }
+
+  const saveUpdate = async (post) => {
+    if (!editingMessage.trim()) return
+
+    try {
+      await updateGuestBook(post.id, {
+        message: editingMessage.trim(),
+        character: post.character,
+      })
+      setEditingId(null)
+    } catch (error) {
+      console.error('방명록 수정 실패:', error)
+      setActionMessage('본인의 글만 수정할 수 있습니다.')
+    }
+  }
+
+  // 수정: 삭제 결과도 팝업 대신 목록 안에서 안내합니다.
+  const handleDelete = async (postId) => {
+    try {
+      await deleteGuestBook(postId)
+    } catch (error) {
+      console.error('방명록 삭제 실패:', error)
+      setActionMessage('본인의 글만 삭제할 수 있습니다.')
+    }
+  }
+
+  return (
+    <section className={styles.postSection}>
+      <form className={styles.searchForm} onSubmit={handleSearch}>
+        <input
+          type="search"
+          value={searchText}
+          onChange={(event) => setSearchText(event.target.value)}
+          placeholder="find e-mail"
+          aria-label="작성자 이메일 검색"
+        />
+        <button type="submit">click</button>
+      </form>
+
+      {actionMessage && <p className={styles.actionMessage}>{actionMessage}</p>}
+      {loadError && <p className={styles.actionMessage}>{loadError}</p>}
+
+      <div className={styles.postList}>
+        {filteredPosts.map((post) => {
+          const isOwner = user?.uid === post.authorId
+          const isEditing = editingId === post.id
+
+          return (
+            <article className={styles.postCard} key={post.id}>
+              <div className={styles.postContent}>
+                {/* 수정: 검색 결과 카드에서 닉네임과 실제 작성자 이메일을 함께 확인합니다. */}
+                <strong>{post.nickName} ({post.authorEmail})</strong>
+                {isEditing ? (
+                  <textarea value={editingMessage} onChange={(event) => setEditingMessage(event.target.value)} maxLength={500} />
+                ) : (
+                  <p>{post.message}</p>
+                )}
+
+                {isOwner && (
+                  <div className={styles.postActions}>
+                    {isEditing ? (
+                      <>
+                        <button type="button" onClick={() => saveUpdate(post)}>저장</button>
+                        <button type="button" onClick={() => setEditingId(null)}>취소</button>
+                      </>
+                    ) : (
+                      <>
+                        <button type="button" onClick={() => startEditing(post)}>수정</button>
+                        <button type="button" onClick={() => handleDelete(post.id)}>삭제</button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+              <CharacterAvatar character={post.character} />
+            </article>
+          )
+        })}
+        {/* 수정: 이메일 검색 결과가 없을 때 빈 목록임을 안내합니다. */}
+        {searchEmail && filteredPosts.length === 0 && (
+          <p className={styles.noResult}>해당 이메일로 작성된 글이 없습니다.</p>
+        )}
+      </div>
+    </section>
+  )
+}
+
+export default GuestBookList
