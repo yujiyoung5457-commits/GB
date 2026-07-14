@@ -1,0 +1,102 @@
+/* 수정: 브라우저마다 다른 기본 박스 크기 계산을 통일합니다. */
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* 수정: 브라우저 기본 여백과 문서 높이 차이를 제거합니다. */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 수정: 제목·문단·목록의 브라우저 기본 여백을 초기화합니다. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* 수정: 이미지·영상 아래에 생기는 브라우저별 baseline 여백을 제거합니다. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 수정: 폼 컨트롤이 운영체제 기본 글꼴 대신 프로젝트 글꼴을 상속합니다. */
+button,
+input,
+textarea,
+select {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type='button'],
+[type='submit'],
+[type='reset'] {
+  -webkit-appearance: button;
+}
+
+textarea {
+  overflow: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 수정: 애니메이션 감소 설정을 사용하는 브라우저에서 접근성을 보장합니다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
