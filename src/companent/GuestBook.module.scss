@@ -241,7 +241,8 @@
 }
 
 // 수정: 일반 노트북 폭에서는 세로 1열로 바뀌지 않고 3열을 화면 안에 유지합니다.
-@media (max-width: 1100px) and (min-width: 761px) {
+// 수정: 화면 배율이 크거나 실제 표시 폭이 좁은 PC에서도 기존 3열 UX/UI를 유지합니다.
+@media (max-width: 1600px) and (min-width: 761px) {
   .form {
     padding-right: 24px;
     padding-left: 24px;
@@ -249,12 +250,39 @@
 
   .wrap {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: 16px;
+    gap: 20px;
+  }
+
+  .characterList {
+    grid-template-columns: repeat(4, 92px);
+    gap: 8px;
+  }
+
+  .characterButton {
+    width: 92px;
+    height: 96px;
+  }
+
+  .emojiList {
+    gap: 7px;
+  }
+
+  .emo {
+    width: 46px;
+    height: 46px;
+    font-size: 21px;
+  }
+}
+
+// 수정: 노트북처럼 더 좁은 화면에서만 요소를 한 단계 더 줄여 3열이 잘리지 않게 합니다.
+@media (max-width: 1150px) and (min-width: 761px) {
+  .wrap {
+    gap: 14px;
   }
 
   .characterList {
     grid-template-columns: repeat(4, 70px);
-    gap: 8px;
+    gap: 7px;
   }
 
   .characterButton {
@@ -263,7 +291,7 @@
   }
 
   .emojiList {
-    gap: 6px;
+    gap: 5px;
   }
 
   .emo {
