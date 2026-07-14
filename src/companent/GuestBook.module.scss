@@ -305,8 +305,8 @@
 .postSection {
   // 수정: 검색창은 그대로 두고 카드가 4개를 넘을 때 목록 안에서만 스크롤합니다.
   min-width: 0;
-  // 수정: 오른쪽 검색·카드 영역을 화면 높이의 20%만큼 위로 올립니다.
-  margin-top: -20vh;
+  // 수정: 기존처럼 영역을 위로 올리되, 화면 비율에 따라 네비게이션까지 침범하지 않도록 이동량을 제한합니다.
+  margin-top: max(-20vh, -140px);
 }
 
 .searchForm {
@@ -488,4 +488,18 @@
 .pagination .currentPage {
   background: #2255a4;
   color: white;
+}
+
+// 수정: 화면 높이가 짧으면 폼의 위쪽 여백도 줄어들기 때문에 목록을 추가로 올리지 않습니다.
+@media (max-height: 820px) and (min-width: 761px) {
+  .postSection {
+    margin-top: 0;
+  }
+}
+
+// 수정: 모바일 1열 배치에서는 위쪽 영역과 겹치지 않도록 음수 여백을 제거합니다.
+@media (max-width: 760px) {
+  .postSection {
+    margin-top: 0;
+  }
 }
