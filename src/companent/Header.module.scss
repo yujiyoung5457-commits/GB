@@ -56,6 +56,16 @@
     font-size: 18px;
 }
 
+// 수정: HOME, GUESTBOOK 네비게이션 글자를 호버할 때 #111로 변경합니다.
+.nav a {
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: #111;
+  mix-blend-mode: normal;
+}
+
 .inner{
     width: 100%;
      display: flex;
@@ -68,9 +78,32 @@
 .inner a {
   color: white;
   text-decoration: none;
+  // 수정: 밝은 배경에서는 어둡게, 어두운 배경에서는 밝게 자동 반전합니다.
+  mix-blend-mode: difference;
 }
 .login, .signup{
     font-size: 18px;
+    transition: color 0.3s;
+}
+
+// 수정: 게스트북 페이지에서만 헤더 글자를 요청한 반투명 색상으로 고정합니다.
+.guestBookHeader .inner a {
+  // 수정: 알파 없이 조금 더 진한 저채도 하늘색으로 표시합니다.
+  color: #6f8da3;
+  mix-blend-mode: normal;
+}
+
+.guestBookHeader .nav a:hover,
+.guestBookHeader .login:hover,
+.guestBookHeader .signup:hover {
+  color: #111;
+}
+
+// 수정: LOGIN, SIGN UP 글자도 호버할 때 #111로 변경합니다.
+.login:hover,
+.signup:hover {
+  color: #111;
+  mix-blend-mode: normal;
 }
 .inner>div{
     display: flex;

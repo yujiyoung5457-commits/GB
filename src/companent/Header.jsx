@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import useAuthStore from '../store/useAuthStore'
 import styles from './Header.module.scss'
 
@@ -8,6 +8,8 @@ const Header = () => {
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
+  const location = useLocation()
+  const isGuestBookPage = location.pathname === '/guestbook'
 
   const handleLogout = async (event) => {
     event.preventDefault()
@@ -22,7 +24,7 @@ const Header = () => {
   }
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isGuestBookPage ? styles.guestBookHeader : ''}`}>
       <span></span>
       <div className={styles.inner}>
         <Link to="/" className={styles.logo}>GUESTBOOK-CLOUD</Link>
