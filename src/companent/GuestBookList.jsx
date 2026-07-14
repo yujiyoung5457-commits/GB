@@ -7,7 +7,6 @@ import styles from './GuestBook.module.scss'
 const GuestBookList = ({ posts, loadError }) => {
   const user = useAuthStore((state) => state.user)
   const [searchText, setSearchText] = useState('')
-  const [searchEmail, setSearchEmail] = useState('')
   const [editingId, setEditingId] = useState(null)
   const [editingMessage, setEditingMessage] = useState('')
   const [actionMessage, setActionMessage] = useState('')
@@ -28,9 +27,10 @@ const GuestBookList = ({ posts, loadError }) => {
     })
   }
 
-  // 수정: 실제 Firebase 작성자 이메일을 소문자로 비교해 해당 이메일의 글만 찾습니다.
+  // 수정: 입력 중인 검색어를 바로 정규화해 이메일 시작 글자 기준으로 실시간 검색합니다.
+  const normalizedSearchText = searchText.trim().toLowerCase()
   const filteredPosts = posts.filter((post) => (
-    !searchEmail || post.authorEmail?.toLowerCase().includes(searchEmail)
+    !normalizedSearchText || post.authorEmail?.toLowerCase().startsWith(normalizedSearchText)
   ))
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / postsPerPage))
@@ -51,7 +51,6 @@ const GuestBookList = ({ posts, loadError }) => {
 
   const handleSearch = (event) => {
     event.preventDefault()
-    setSearchEmail(searchText.trim().toLowerCase())
     setCurrentPage(1)
   }
 
@@ -93,7 +92,11 @@ const GuestBookList = ({ posts, loadError }) => {
         <input
           type="search"
           value={searchText}
-          onChange={(event) => setSearchText(event.target.value)}
+          onChange={(event) => {
+            // 수정: click을 누르지 않아도 입력 즉시 필터링하고 첫 페이지로 이동합니다.
+            setSearchText(event.target.value)
+            setCurrentPage(1)
+          }}
           placeholder="find e-mail"
           aria-label="작성자 이메일 검색"
         />
@@ -150,7 +153,7 @@ const GuestBookList = ({ posts, loadError }) => {
           )
         })}
         {/* 수정: 이메일 검색 결과가 없을 때 빈 목록임을 안내합니다. */}
-        {searchEmail && filteredPosts.length === 0 && (
+        {normalizedSearchText && filteredPosts.length === 0 && (
           <p className={styles.noResult}>해당 이메일로 작성된 글이 없습니다.</p>
         )}
       </div>
