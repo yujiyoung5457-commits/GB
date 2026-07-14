@@ -11,6 +11,17 @@ const GuestBookList = ({ posts, loadError }) => {
   const [editingId, setEditingId] = useState(null)
   const [editingMessage, setEditingMessage] = useState('')
   const [actionMessage, setActionMessage] = useState('')
+  const [expandedPostIds, setExpandedPostIds] = useState(() => new Set())
+
+  // 수정: 긴 글의 더보기/접기 상태를 카드별로 관리합니다.
+  const toggleExpandedPost = (postId) => {
+    setExpandedPostIds((currentIds) => {
+      const nextIds = new Set(currentIds)
+      if (nextIds.has(postId)) nextIds.delete(postId)
+      else nextIds.add(postId)
+      return nextIds
+    })
+  }
 
   // 수정: 실제 Firebase 작성자 이메일을 소문자로 비교해 해당 이메일의 글만 찾습니다.
   const filteredPosts = posts.filter((post) => (
@@ -74,16 +85,26 @@ const GuestBookList = ({ posts, loadError }) => {
         {filteredPosts.map((post) => {
           const isOwner = user?.uid === post.authorId
           const isEditing = editingId === post.id
+          const isExpanded = expandedPostIds.has(post.id)
+          const isLongMessage = post.message.length > 55 || post.message.split('\n').length > 2
 
           return (
-            <article className={styles.postCard} key={post.id}>
+            <article className={`${styles.postCard} ${isExpanded ? styles.expandedCard : ''}`} key={post.id}>
               <div className={styles.postContent}>
                 {/* 수정: 검색 결과 카드에서 닉네임과 실제 작성자 이메일을 함께 확인합니다. */}
                 <strong>{post.nickName} ({post.authorEmail})</strong>
                 {isEditing ? (
                   <textarea value={editingMessage} onChange={(event) => setEditingMessage(event.target.value)} maxLength={500} />
                 ) : (
-                  <p>{post.message}</p>
+                  <>
+                    {/* 수정: 긴 메시지는 두 줄로 줄이고 더보기 버튼으로 펼칩니다. */}
+                    <p className={`${styles.messageText} ${isExpanded ? styles.expandedMessage : ''}`}>{post.message}</p>
+                    {isLongMessage && (
+                      <button className={styles.moreButton} type="button" onClick={() => toggleExpandedPost(post.id)}>
+                        {isExpanded ? '접기' : '...더보기'}
+                      </button>
+                    )}
+                  </>
                 )}
 
                 {isOwner && (
