@@ -402,7 +402,10 @@
 
 // 수정: 더보기를 누르면 글뿐 아니라 카드 배경도 내용 높이만큼 함께 늘어납니다.
 .postCard.expandedCard {
+  // 수정: 더보기 상태에서는 긴 글의 실제 전체 높이만큼 카드 배경을 강제로 확장합니다.
+  height: max-content !important;
   min-height: 116px;
+  align-self: stretch;
   align-items: flex-start;
   overflow: visible;
 }

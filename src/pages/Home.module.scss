@@ -29,13 +29,20 @@
 .videoLayer {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 1.2s ease-in-out;
   pointer-events: none;
 }
 
 .activeVideo {
   opacity: 1;
+  z-index: 1;
+}
+
+// 수정: 이전 영상만 위에서 서서히 사라지며 새 영상을 드러냅니다.
+.previousVideo {
+  z-index: 2;
+  opacity: 0;
 }
    .copy{
         // width: 100%;
