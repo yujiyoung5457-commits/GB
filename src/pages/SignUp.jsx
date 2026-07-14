@@ -64,7 +64,7 @@ const SignUp = () => {
 
         <label className={styles.field}>
           PASS-WORD
-          <input type="password" inputMode="numeric" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="숫자만 사용해도 가능 (6자리 이상)" minLength={6} required />
+          <input type="password" inputMode="numeric" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="text or number ex)123456" minLength={6} required />
         </label>
         {/* 수정: 회원가입 실패 이유를 현재 화면 안에 표시합니다. */}
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
