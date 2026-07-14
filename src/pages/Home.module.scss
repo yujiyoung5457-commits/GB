@@ -63,6 +63,8 @@
 }
 .home h2{
     font-size: 50px;
+    // 수정: 영상 제목 두 줄의 간격을 기존보다 10px 가깝게 조정합니다.
+    margin-top: -30px;
 }
 .home button{
     border: none;
@@ -82,8 +84,8 @@
 }
 .activeDot{
   transform: scale(0.8);
-   width: 5px;
-  height: 5px;
+   width: 10px;
+  height: 10px;
     background-color: white;
     border-radius: 50%;
     border: none;
