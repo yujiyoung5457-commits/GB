@@ -62,7 +62,7 @@
 }
 
 .nav a:hover {
-  color: #111;
+  color: #60c5ff;
   mix-blend-mode: normal;
 }
 
@@ -96,13 +96,13 @@
 .guestBookHeader .nav a:hover,
 .guestBookHeader .login:hover,
 .guestBookHeader .signup:hover {
-  color: #111;
+  color: #28546d;
 }
 
 // 수정: LOGIN, SIGN UP 글자도 호버할 때 #111로 변경합니다.
 .login:hover,
 .signup:hover {
-  color: #111;
+  color: #60c5ff;
   mix-blend-mode: normal;
 }
 .inner>div{
