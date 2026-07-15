@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Header from './companent/Header'
 import SignUp from './pages/SignUp'
 import useAuthStore from './store/useAuthStore'
+import Gallery from './pages/Gallery.jsx'
 
 const App = () => {
   // 수정: 앱 시작 시 Firebase 인증 상태를 Zustand와 동기화합니다.
@@ -23,6 +24,7 @@ const App = () => {
         <Route path='/login' element={ <Login />} />
         <Route path='/signup' element={ <SignUp />} />
         <Route path='/guestbook' element={<GuestBook/>} />
+        <Route path='/gallery' element={<Gallery />} />
         {/* 만들지 않은 주소로 접근하면 홈으로 이동시킨다 */}
         <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>

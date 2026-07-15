@@ -139,6 +139,8 @@ const GuestBookForm = ({ posts, loadError }) => {
           {/* 수정: 검색과 작성 글을 요청 이미지처럼 오른쪽 열에 배치합니다. */}
           <GuestBookList posts={posts} loadError={loadError} />
         </div>
+        {/* 어두운 것 */}
+        <div className={styles.drop}></div>
       </form>
     </div>
   )

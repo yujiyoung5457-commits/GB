@@ -31,6 +31,7 @@ const Header = () => {
         <nav className={styles.nav}>
           <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>HOME</NavLink>
           <NavLink to="/guestbook" className={({ isActive }) => isActive ? styles.active : ''}>GUESTBOOK</NavLink>
+          <NavLink to="/Gallery" className={({ isActive }) => isActive ? styles.active : ''}>GALLERY</NavLink>
         </nav>
         <div>
           {/* 수정: 기존 LOGIN 위치를 로그인 상태일 때 LOGOUT으로 사용합니다. */}
