@@ -37,8 +37,14 @@ const Header = () => {
           {/* 수정: 기존 LOGIN 위치를 로그인 상태일 때 LOGOUT으로 사용합니다. */}
           {user
             ? <Link to="/" className={styles.login} onClick={handleLogout}>LOGOUT</Link>
-            : <Link to="/login" className={styles.login}>LOGIN</Link>}
-          <Link to="/signup" className={styles.signup}>SIGN UP</Link>
+            : (
+              <Link to="/login" className={styles.login} aria-label="Login">
+                <img className={styles.authIcon} src="/img/login.png" alt="" />
+              </Link>
+            )}
+          <Link to="/signup" className={styles.signup} aria-label="Sign in">
+            <img className={styles.authIcon} src="/img/signin.png" alt="" />
+          </Link>
         </div>
       </div>
     </header>

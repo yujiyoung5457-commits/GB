@@ -83,8 +83,18 @@
   mix-blend-mode: difference;
 }
 .login, .signup{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
     transition: color 0.3s;
+}
+
+.authIcon {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
 }
 
 // 수정: 게스트북 페이지에서만 헤더 글자를 요청한 반투명 색상으로 고정합니다.

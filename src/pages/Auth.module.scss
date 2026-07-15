@@ -42,6 +42,7 @@
 
 // 수정: 로그인·회원가입 input의 배경색만 반투명으로 변경합니다.
 .auth input {
+     backdrop-filter: blur(5px);
     background: rgba(255, 255, 255, 0.6);
 }
 
@@ -51,6 +52,7 @@
 .auth input:-webkit-autofill:focus,
 .auth input:-webkit-autofill:active {
     transition: background-color 9999s ease-out 0s;
+   
 }
 .auth button{
     background-color: rgb(99, 126, 199);
