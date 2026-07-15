@@ -70,7 +70,7 @@ const SignUp = () => {
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'SIGNUP...' : 'SIGNUP'}</button>
         <p className={styles.why}>계정이 있으신가요? {'  '}<Link to="/login">로그인 바로 가기</Link></p>
-        <img src="/cloud2.jpg" alt="구름 사진" />
+        <img src="img/cloud2.jpg" alt="구름 사진" />
         <div className={styles.black}></div>
       </form>
     </section>
