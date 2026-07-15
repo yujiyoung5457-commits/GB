@@ -259,6 +259,33 @@ const Gallery = () => {
         <img className={styles.sunMane} src="/img/backsun.svg" alt="" />
         <img className={styles.sunFace} src="/img/smile.png" alt="" />
       </div>
+      <svg
+        className={styles.bottomScribble}
+        viewBox="0 0 1200 600"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        <g className={styles.scribbleLines}>
+          <path id="bottomScribbleRoute" d="M70 430C130 250 200 170 280 250S300 500 230 490S210 240 360 210S600 270 500 470S430 220 650 210S820 500 690 495S620 235 810 205C860 195 900 185 940 180S1020 80 970 88S1030 150 985 175S910 140 950 110S1050 90 1050 130S1000 185 970 160S970 105 1020 120S1090 175 1050 195S970 190 985 155S1080 130 1080 165S1045 225 1015 205S1000 285 1050 305S1145 320 1180 305" />
+        </g>
+        <g className={styles.scribbleShapes}>
+          <ellipse cx="155" cy="145" rx="15" ry="64" transform="rotate(-27 155 145)" />
+          <ellipse cx="875" cy="135" rx="28" ry="13" transform="rotate(-18 875 135)" />
+          <circle r="7">
+            <animateMotion
+              dur="28s"
+              repeatCount="indefinite"
+              keyPoints="0;1;0"
+              keyTimes="0;0.5;1"
+              calcMode="linear"
+            >
+              <mpath href="#bottomScribbleRoute" />
+            </animateMotion>
+          </circle>
+          <circle cx="75" cy="468" r="15" />
+          <circle cx="485" cy="545" r="15" />
+        </g>
+      </svg>
     </section>
     {selectedImage && (
       <div
