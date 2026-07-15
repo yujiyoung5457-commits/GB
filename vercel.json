@@ -1,4 +1,10 @@
 {
+  "build": {
+    "env": {
+      "CI": "false"
+    }
+  },
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
