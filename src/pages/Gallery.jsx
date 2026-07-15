@@ -199,6 +199,25 @@ const Gallery = () => {
         Nice weather, huh?
       </h1>
       <svg
+        className={styles.titleArc}
+        viewBox="0 0 1000 270"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path id="titleArcRoute" d="M16 252Q390 -76 984 58" />
+        <circle r="5">
+          <animateMotion
+            dur="11s"
+            repeatCount="indefinite"
+            keyPoints="0;1;0"
+            keyTimes="0;0.5;1"
+            calcMode="linear"
+          >
+            <mpath href="#titleArcRoute" />
+          </animateMotion>
+        </circle>
+      </svg>
+      <svg
         className={styles.skyGraphic}
         viewBox="0 0 1000 600"
         role="img"

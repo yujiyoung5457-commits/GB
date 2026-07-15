@@ -353,6 +353,28 @@
   transform: translateY(0);
 }
 
+.titleArc {
+  position: absolute;
+  top: 11vh;
+  left: clamp(40px, 6vw, 110px);
+  z-index: 2;
+  width: min(64vw, 920px);
+  height: 270px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.titleArc path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.titleArc circle {
+  fill: #fff;
+}
+
 .skyLines {
   fill: none;
   stroke: rgba(255, 255, 255, 0.92);
@@ -428,6 +450,13 @@
     right: 24px;
     left: 24px;
     font-size: 48px;
+  }
+
+  .titleArc {
+    top: 125px;
+    left: 20px;
+    width: 76vw;
+    height: 175px;
   }
 }
 
