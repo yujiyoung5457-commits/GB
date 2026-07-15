@@ -196,7 +196,7 @@ const Gallery = () => {
         className={`${styles.weatherTitle} ${revealedTitles.weather ? styles.visible : ''}`}
         data-reveal="weather"
       >
-        Nice weather, huh?
+        HUMAN IS 180℃
       </h1>
       <svg
         className={styles.titleArc}
