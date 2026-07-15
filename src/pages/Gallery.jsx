@@ -12,47 +12,9 @@ const GALLERY_IMAGES = [
   '/img/c04.jpg',
 ]
 
-const WEATHER_CITIES = ['Ansan', 'Helsinki', 'Tokyo', 'Rome', 'Moscow']
-const WEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY
-
-/* Legacy HTML weather script (replaced by React state below).
-let dis=document.querySelector("#dis")
-        let rain=document.querySelector("#rain")
-        let city=document.querySelector(".city")
-        let biento=document.querySelector("#biento")
-        let name=document.querySelector(".name")
-        let imgBox=document.querySelector(".imgBox")
-
-        const API_KEY=''
-
-        const cityname=["Ansan", "Helsinki", "Tokyo", "Rome", "Moscow"];
-
-        let con=document.querySelector("#con")
-
-          
-    
-        async function weatherToday(cityname){
-            let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${API_KEY}&units=metric&lang=kr`)
-            let data=await res.json()
-            dis.innerHTML="Temperature:"+data.main.temp+"℃"
-            rain.innerHTML="Dew Point:"+data.main.humidity+"%"
-            biento.innerHTML="Wind Speed:"+data.wind.speed 
-            let icon=data.weather[0].icon;
-
-            let iconUrl=`http://openweathermap.org/img/wn/${icon}@2x.png`
-            con.setAttribute('src', iconUrl)
-            name.innerHTML=cityname
-        }
-        weatherToday('Ansan')
-*/
-        // 날씨 API가져옴
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [revealedTitles, setRevealedTitles] = useState({})
-  const [selectedCity, setSelectedCity] = useState('Ansan')
-  const [weather, setWeather] = useState(null)
-  const [weatherError, setWeatherError] = useState('')
-  const [isWeatherLoading, setIsWeatherLoading] = useState(true)
   const galleryRef = useRef(null)
   const sliderRef = useRef(null)
   const cursorRef = useRef(null)
@@ -134,43 +96,6 @@ const Gallery = () => {
     if (cursorRef.current) cursorRef.current.dataset.visible = 'false'
   }
 
-  useEffect(() => {
-    const controller = new AbortController()
-
-    const loadWeather = async () => {
-      setIsWeatherLoading(true)
-      setWeatherError('')
-
-      if (!WEATHER_API_KEY) {
-        setWeatherError('OpenWeather API key가 설정되지 않았습니다.')
-        setIsWeatherLoading(false)
-        return
-      }
-
-      try {
-        const params = new URLSearchParams({
-          q: selectedCity,
-          appid: WEATHER_API_KEY,
-          units: 'metric',
-          lang: 'kr',
-        })
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?${params}`,
-          { signal: controller.signal },
-        )
-
-        if (!response.ok) throw new Error(`날씨 요청 실패 (${response.status})`)
-        setWeather(await response.json())
-      } catch (error) {
-        if (error.name !== 'AbortError') setWeatherError(error.message)
-      } finally {
-        if (!controller.signal.aborted) setIsWeatherLoading(false)
-      }
-    }
-
-    loadWeather()
-    return () => controller.abort()
-  }, [selectedCity])
 
   useEffect(() => {
     if (!selectedImage) return undefined
@@ -266,48 +191,55 @@ const Gallery = () => {
         </div>
       </div>
     </section>
-    <section className={styles.section3}>
-      <h1 className={styles.todo}>What’s your sky today?</h1>
-      {/* 날씨 에피아이 가져온거 아래 */}
-      <div className={styles.one}>
-    
-        <div className={styles.wrap}>
-        
-        <div className={styles.city}>
-          {WEATHER_CITIES.map((city) => (
-            <button
-              type="button"
-              className={`${styles.bt} ${selectedCity === city ? styles.activeCity : ''}`}
-              key={city}
-              onClick={() => setSelectedCity(city)}
-            >
-              {city}
-            </button>
-          ))}
-        </div>
+    <section className={styles.section3} aria-label="Abstract sky illustration">
+      <h1
+        className={`${styles.weatherTitle} ${revealedTitles.weather ? styles.visible : ''}`}
+        data-reveal="weather"
+      >
+        Nice weather, huh?
+      </h1>
+      <svg
+        className={styles.skyGraphic}
+        viewBox="0 0 1000 600"
+        role="img"
+        aria-labelledby="skyGraphicTitle"
+      >
+        <title id="skyGraphicTitle">Abstract wind, cloud, and colorful sky dots</title>
 
-        <div className={styles.mainBox}>
-          {isWeatherLoading && <p className={styles.weatherMessage}>날씨를 불러오는 중...</p>}
-          {weatherError && <p className={styles.weatherMessage}>{weatherError}</p>}
-          {weather && !isWeatherLoading && !weatherError && (
-            <>
-              <img
-                className={styles.weatherIcon}
-                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                alt={weather.weather[0].description}
-              />
-              <div className={styles.text}>
-                <h2 className={styles.name}>{weather.name}</h2>
-                <div>Temperature: {Math.round(weather.main.temp)}°C</div>
-                <div>Humidity: {weather.main.humidity}%</div>
-                <div>Wind Speed: {weather.wind.speed} m/s</div>
-              </div>
-            </>
-          )}
-        </div>
-        <div className={styles.circle}></div>
-    </div>
-    </div>
+        <g className={styles.skyLines}>
+          <path d="M70 165H390" />
+          <circle cx="70" cy="165" r="4" className={styles.whiteDot} />
+
+          <path d="M25 525C45 455 55 390 85 390C115 390 125 455 145 525" />
+          <path d="M25 525C45 455 55 390 85 390C115 390 125 455 145 525" transform="translate(120 0)" />
+          <path d="M25 525C45 455 55 390 85 390C115 390 125 455 145 525" transform="translate(240 0)" />
+
+          <path id="windRoute" d="M515 105V150H440C418 150 418 184 440 184H515V225H585C610 225 610 260 585 260H515V300H440C418 300 418 334 440 334H515V375H585C610 375 610 410 585 410H515V505" />
+          <circle r="4" className={`${styles.whiteDot} ${styles.routeDot}`}>
+            <animateMotion dur="7s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#windRoute" />
+            </animateMotion>
+          </circle>
+
+          <path id="cloudRoute" d="M735 150H720C695 150 675 130 675 105S695 60 720 60H905C930 60 950 80 950 105C950 115 947 124 941 132C967 137 985 159 985 185C985 215 960 240 930 240H735C710 240 690 220 690 195S710 150 735 150Z" />
+        </g>
+
+        <g className={styles.skyDots}>
+          <circle cx="515" cy="82" r="24" fill="rgb(212, 25, 25)" />
+          <circle cx="375" cy="183" r="16" fill="rgb(253, 211, 24)" />
+          <circle cx="280" cy="255" r="16" fill="rgb(62, 92, 226)" />
+          <circle cx="170" cy="335" r="16" fill="rgb(212, 25, 25)" />
+          <circle r="11" fill="#1dbc5d" className={styles.routeDot}>
+            <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#cloudRoute" />
+            </animateMotion>
+          </circle>
+        </g>
+      </svg>
+      <div className={styles.sunCharacter} aria-hidden="true">
+        <img className={styles.sunMane} src="/img/backsun.svg" alt="" />
+        <img className={styles.sunFace} src="/img/smile.png" alt="" />
+      </div>
     </section>
     {selectedImage && (
       <div
