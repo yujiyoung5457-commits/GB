@@ -51,7 +51,7 @@
 }
 .nav{
     display: flex;
-    gap: 30px;
+    gap: 200px;
     transition: all 0.3;
     font-size: 18px;
 }
@@ -68,7 +68,7 @@
 
 .inner{
     // 수정: 넓은 화면의 기존 크기는 유지하고, 좁은 화면에서는 헤더가 화면 밖으로 잘리지 않게 합니다.
-    width: min(1120px, calc(100% - 48px));
+    width: min(1600px, calc(100% - 48px));
      display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,7 +108,7 @@
 }
 .inner>div{
     display: flex;
-    gap: 30px;
+    gap: 200px;
   }
 
   

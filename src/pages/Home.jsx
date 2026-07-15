@@ -43,6 +43,8 @@ const Home = () => {
   return (
     <section className={styles.home}>
         <div className={styles.slide}>
+            {/* 여기는 어두운 부분 */}
+            <div className={styles.drop}></div>
             {/* 수정: 평소에는 활성 영상 1개만 재생해 브라우저 디코딩 부하를 줄입니다. */}
             <video
                 key={videos[activeIndex].src}
