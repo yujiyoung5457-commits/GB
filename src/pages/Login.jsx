@@ -62,7 +62,7 @@ const Login = () => {
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'LOGIN...' : 'LOGIN'}</button>
         <p className={styles.why}>계정이 없으신가요? {'  '}<Link to="/signup">회원가입 바로 가기</Link></p>
-        <img src="/cloud2.jpg" alt="구름 사진" />
+        <img src="img/cloud2.jpg" alt="구름 사진" />
          <div className={styles.black}></div>
       </form>
     </section>
