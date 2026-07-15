@@ -213,6 +213,7 @@ const Gallery = () => {
       data-visible="false"
       aria-hidden="true"
     >
+      <div className={styles.cursorLens}></div>
       <div className={styles.cursorVisual}>
         <img src="/img/w.png" alt="" />
       </div>
