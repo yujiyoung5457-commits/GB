@@ -75,7 +75,7 @@ const Home = () => {
             )}
         </div>
         {/* 글자가 나타나는 부분 */}
-        <div className={styles.copy}>
+        <div key={activeIndex} className={styles.copy}>
             <h1>{activeVideo.label}</h1>
             <h2>{activeVideo.title}</h2>
         </div>

@@ -67,13 +67,34 @@
 }
 .home h1{
     font-size: 110px;
+    animation: copyFloatUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     // margin-bottom: -50px;
 
 }
 .home h2{
     font-size: 50px;
+    animation: copyFloatUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
     // 수정: 영상 제목 두 줄의 간격을 기존보다 10px 가깝게 조정합니다.
     margin-top: -30px;
+}
+
+@keyframes copyFloatUp {
+  from {
+    opacity: 0;
+    transform: translateY(65px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home h1,
+  .home h2 {
+    animation: none;
+  }
 }
 .home button{
     border: none;
